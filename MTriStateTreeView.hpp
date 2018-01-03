@@ -3,21 +3,13 @@
 ////////////////////////////////////////////////////////////////////////////
 
 #ifndef MZC4_MTRISTATETREEVIEW_HPP_
-#define MZC4_MTRISTATETREEVIEW_HPP_     3       /* Version 3 */
+#define MZC4_MTRISTATETREEVIEW_HPP_     5       /* Version 5 */
 
 #include "MTreeView.hpp"
 
 ////////////////////////////////////////////////////////////////////////////
 
 #define UM_TRISTATETREEVIEW     (WM_USER + 100)
-
-// 3 states
-#define TSTV_UNCHECKED              0
-#define TSTV_CHECKED                1
-#define TSTV_INDETERMINATE          2
-#define TSTV_GRAYED_UNCHECKED       3   // for future use
-#define TSTV_GRAYED_CHECKED         4   // for future use
-#define TSTV_GRAYED_INDETERMINATE   5   // for future use
 
 // width and height of check mark
 #ifndef TSTV_WIDTH
@@ -30,6 +22,15 @@
 class MTriStateTreeView : public MTreeView
 {
 public:
+    // 3 states
+    enum {
+        TSTV_UNCHECKED            = 0,
+        TSTV_CHECKED              = 1,
+        TSTV_INDETERMINATE        = 2,
+        TSTV_GRAYED_UNCHECKED     = 3,  // for future use
+        TSTV_GRAYED_CHECKED       = 4,  // for future use
+        TSTV_GRAYED_INDETERMINATE = 5   // for future use
+    };
     MTriStateTreeView();
     virtual ~MTriStateTreeView();
 
