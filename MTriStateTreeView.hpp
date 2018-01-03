@@ -23,15 +23,16 @@ public:
     MTriStateTreeView();
     virtual ~MTriStateTreeView();
 
-    // call me
+    // Call me. Please use "3statechecks.bmp" for nBitmapResourceID.
     BOOL InitStateImageList(INT nBitmapResourceID);
 
-    // call me from parent
-    virtual LRESULT OnNotifyFromParent(HWND hwnd, int idFrom, LPNMHDR pnmhdr);
+    // Call me from parent's WM_NOTIFY
+    LRESULT OnNotifyFromParent(HWND hwnd, int idFrom, LPNMHDR pnmhdr);
 
     INT GetCheckState(HTREEITEM hItem);
+
     void InternalCheck(HTREEITEM hItem, INT nNewState);
-    void CheckItem(HTREEITEM hItem, INT nNewState);
+    void SetCheckState(HTREEITEM hItem, INT nNewState);
 
 protected:
     HIMAGELIST m_himl;
@@ -98,14 +99,14 @@ inline void MTriStateTreeView::InternalCheck(HTREEITEM hItem, INT nNewState)
     SetItem(&item);
 }
 
-inline void MTriStateTreeView::CheckItem(HTREEITEM hItem, INT nNewState)
+inline void MTriStateTreeView::SetCheckState(HTREEITEM hItem, INT nNewState)
 {
     InternalCheck(hItem, nNewState);
 
     HTREEITEM hChildItem = GetChildItem(hItem);
     while (hChildItem)
     {
-        CheckItem(hChildItem, nNewState);
+        SetCheckState(hChildItem, nNewState);
 
         hChildItem = GetNextSiblingItem(hChildItem);
     }
@@ -137,7 +138,7 @@ inline void MTriStateTreeView::ChangeParent(HTREEITEM hParent)
 
 inline void MTriStateTreeView::ChangeItemState(HTREEITEM hItem, INT nNewState)
 {
-    CheckItem(hItem, nNewState);
+    SetCheckState(hItem, nNewState);
 
     HTREEITEM hParent = GetParentItem(hItem);
     ChangeParent(hParent);
